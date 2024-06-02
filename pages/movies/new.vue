@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>New movie</h1>
+    <p>
+      <NuxtLink href="/movies">Movie list</NuxtLink>
+    </p>
     <form @submit.prevent="submit()">
       <input type="text" v-model="title" />
       <button type="submit">Submit</button>
@@ -15,6 +18,7 @@ async function submit() {
     method: "POST",
     body: { title: title.value },
   }
-  await $fetch("/api/movies", options)
+  const { id } = await $fetch("/api/movies", options)
+  await navigateTo(`/movies/${id}`)
 }
 </script>

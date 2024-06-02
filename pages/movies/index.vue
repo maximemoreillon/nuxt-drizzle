@@ -4,7 +4,13 @@
     <p>
       <NuxtLink href="/movies/new">New Movie</NuxtLink>
     </p>
-    <p></p>
+    <p>
+      <ul>
+        <li v-for="movie in movies" :key="movie.id">
+          <NuxtLink :href="`/movies/${movie.id}`">{{ movie.title }}</NuxtLink>
+        </li>
+      </ul>
+    </p>
   </div>
 </template>
 

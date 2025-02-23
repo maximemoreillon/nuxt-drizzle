@@ -12,13 +12,12 @@
 </template>
 
 <script setup lang="ts">
-const title = ref("")
+const title = ref("");
 async function submit() {
-  const options = {
+  const { id } = await $fetch("/api/movies", {
     method: "POST",
     body: { title: title.value },
-  }
-  const { id } = await $fetch("/api/movies", options)
-  await navigateTo(`/movies/${id}`)
+  });
+  await navigateTo(`/movies/${id}`);
 }
 </script>

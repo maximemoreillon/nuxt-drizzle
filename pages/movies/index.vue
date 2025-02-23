@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="ts">
-const { data: movies, pending, error, refresh } = await useFetch("/api/movies")
+const { data: movies} = await useFetch("/api/movies")
 </script>

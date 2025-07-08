@@ -22,9 +22,9 @@
               {{ movie.id }}
             </td>
             <td>
-              <NuxtLink :href="`/movies/${movie.id}`">{{
-                movie.title
-              }}</NuxtLink>
+              <NuxtLink :href="`/movies/${movie.id}`">
+                {{ movie.title }}
+              </NuxtLink>
             </td>
           </tr>
         </tbody>

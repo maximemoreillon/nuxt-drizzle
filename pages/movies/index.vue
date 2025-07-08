@@ -9,6 +9,7 @@
 
     <template v-if="data">
       <div>Total: {{ data.total }}</div>
+      <search />
       <table>
         <thead>
           <tr>

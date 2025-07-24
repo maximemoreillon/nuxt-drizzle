@@ -1,5 +1,5 @@
-import { db } from "@/server/db";
-import { Movies } from "~/db/schema";
+import { db } from "~~/server/db";
+import { Movies } from "~~/server/db/schema";
 
 import { z } from "zod";
 import { asc, count, desc, like } from "drizzle-orm";

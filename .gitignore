@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# SQlite DB
+*.db
+*.sqlite

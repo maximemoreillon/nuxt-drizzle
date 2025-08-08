@@ -1,8 +1,6 @@
+<script setup lang="ts">
+navigateTo("/movies");
+</script>
 <template>
-  <div>
-    <h1>Nuxt + Drizzle</h1>
-    <p>
-      <a href="/movies">Movies</a>
-    </p>
-  </div>
+  <div>Redirecting...</div>
 </template>

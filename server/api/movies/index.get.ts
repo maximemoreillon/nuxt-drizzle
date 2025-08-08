@@ -1,6 +1,5 @@
 import { db } from "~~/server/db";
 import { Movies } from "~~/server/db/schema";
-
 import { z } from "zod";
 import { asc, count, desc, like } from "drizzle-orm";
 
@@ -20,13 +19,9 @@ export default defineEventHandler(async (event) => {
 
   const offset = (page - 1) * itemsPerPage;
 
-  const orderMap = {
-    asc,
-    desc,
-  };
+  const orderMap = { asc, desc };
 
-  let where;
-  if (search) where = like(Movies.title, `%${search}%`);
+  const where = search ? like(Movies.title, `%${search}%`) : undefined;
 
   const items = await db
     .select()

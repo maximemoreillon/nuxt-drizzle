@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <input type="text" v-model="search" />
+    <input type="text" v-model="search" placeholder="Search" />
     <button type="submit">Search</button>
   </form>
 </template>
@@ -11,6 +11,6 @@ const route = useRoute();
 const search = ref(route.query.search);
 
 function submit() {
-  navigateTo({ query: { ...route.query, search: search.value } });
+  navigateTo({ query: { ...route.query, search: search.value || undefined } });
 }
 </script>

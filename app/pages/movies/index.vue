@@ -8,8 +8,8 @@
     <div v-if="error">Failed to query items</div>
 
     <template v-if="data">
-      <div>Total: {{ data.total }}</div>
       <search />
+      <div>Total: {{ data.total }}</div>
       <table>
         <thead>
           <tr>

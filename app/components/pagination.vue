@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="pagination">
     <NuxtLink
       v-if="page > 1"
       :to="{ query: { ...route.query, page: page - 1 } }"
     >
       ←
     </NuxtLink>
-    <span>{{ page }}</span>
+    <div>{{ page }} / {{ pageCount }}</div>
     <NuxtLink
       v-if="page < pageCount"
       :to="{ query: { ...route.query, page: page + 1 } }"

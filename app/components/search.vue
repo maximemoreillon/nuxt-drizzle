@@ -1,6 +1,6 @@
 <template>
   <v-form @submit.prevent="submit">
-    <v-row>
+    <v-row align="center">
       <v-col>
         <v-text-field
           type="text"
@@ -10,7 +10,12 @@
         />
       </v-col>
       <v-col cols="auto">
-        <v-btn type="submit" icon="mdi-magnify" />
+        <v-btn
+          type="submit"
+          prepend-icon="mdi-magnify"
+          text="Search"
+          variant="outlined"
+        />
       </v-col>
     </v-row>
   </v-form>

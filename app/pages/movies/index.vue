@@ -1,12 +1,18 @@
 <template>
   <div>
     <h1>Movies</h1>
-    <p>
-      <NuxtLink href="/movies/new">New Movie</NuxtLink>
-    </p>
+
+    <v-row>
+      <v-col>
+        <search v-model="queryOptions.search" />
+      </v-col>
+      <v-spacer />
+      <v-col cols="auto">
+        <MovieCreateDialog />
+      </v-col>
+    </v-row>
 
     <!-- TODO: event handling -->
-    <search v-model="queryOptions.search" />
 
     <div v-if="error">{{ error }}</div>
     <v-data-table-server

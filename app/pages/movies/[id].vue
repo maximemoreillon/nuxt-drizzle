@@ -1,22 +1,21 @@
 <template>
-  <v-card>
+  <v-card class="mx-auto" max-width="40rem">
     <v-toolbar>
       <v-btn icon="mdi-arrow-left" to="/movies" />
+      <v-toolbar-title> Movie details </v-toolbar-title>
+      <v-spacer />
+      <v-btn @click="deleteMovie" icon="mdi-delete" />
     </v-toolbar>
+    <v-card-text v-if="error">
+      {{ error }}
+    </v-card-text>
+    <v-card-text v-if="movie">
+      <v-row justify="space-between">
+        <v-col cols="auto"> Title: {{ movie.title }} </v-col>
+        <v-col cols="auto"> ID: {{ movie.id }} </v-col>
+      </v-row>
+    </v-card-text>
   </v-card>
-  <div>
-    <h1>Movie details</h1>
-    <p>
-      <NuxtLink href="/movies">Movie list</NuxtLink>
-    </p>
-    <div v-if="error">Failed to query movie</div>
-    <template v-if="movie">
-      <p>Title: {{ movie.title }}</p>
-      <p>
-        <v-btn @click="deleteMovie" icon="mdi-delete" />
-      </p>
-    </template>
-  </div>
 </template>
 
 <script setup lang="ts">

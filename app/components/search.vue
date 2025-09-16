@@ -1,16 +1,31 @@
 <template>
-  <form @submit.prevent="submit">
-    <input type="text" v-model="search" placeholder="Search" />
-    <button type="submit">Search</button>
-  </form>
+  <v-form @submit.prevent="submit">
+    <v-row align="center">
+      <v-col>
+        <v-text-field
+          type="text"
+          v-model="search"
+          label="Search"
+          hide-details
+        />
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          type="submit"
+          prepend-icon="mdi-magnify"
+          text="Search"
+          variant="outlined"
+        />
+      </v-col>
+    </v-row>
+  </v-form>
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-
-const search = ref(route.query.search);
-
+const props = defineProps({ modelValue: { type: String } });
+const emit = defineEmits(["update:modelValue"]);
+const search = ref(props.modelValue);
 function submit() {
-  navigateTo({ query: { ...route.query, search: search.value || undefined } });
+  emit("update:modelValue", search.value);
 }
 </script>

@@ -24,9 +24,7 @@
 <script setup lang="ts">
 const props = defineProps({ modelValue: { type: String } });
 const emit = defineEmits(["update:modelValue"]);
-// TODO: Do not interact with search Parameters
 const search = ref(props.modelValue);
-
 function submit() {
   emit("update:modelValue", search.value);
 }

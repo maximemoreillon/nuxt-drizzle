@@ -12,8 +12,6 @@
       </v-col>
     </v-row>
 
-    <!-- TODO: event handling -->
-
     <div v-if="error">{{ error }}</div>
     <v-data-table-server
       v-else-if="data"

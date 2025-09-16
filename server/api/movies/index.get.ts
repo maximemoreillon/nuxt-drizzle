@@ -33,5 +33,5 @@ export default defineEventHandler(async (event) => {
 
   const [{ total }] = await db.select({ total: count() }).from(Movies);
 
-  return { items, total, itemsPerPage, page };
+  return { items, total, itemsPerPage, page, search, sort, order };
 });

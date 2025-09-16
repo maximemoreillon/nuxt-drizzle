@@ -5,43 +5,57 @@
       <NuxtLink href="/movies/new">New Movie</NuxtLink>
     </p>
 
-    <div v-if="error">Failed to query items</div>
+    <!-- TODO: event handling -->
+    <search v-model="queryOptions.search" />
 
-    <template v-if="data">
-      <search />
-      <div>Total: {{ data.total }}</div>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="movie in data.items" :key="movie.id">
-            <td>
-              {{ movie.id }}
-            </td>
-            <td>
-              <NuxtLink :href="`/movies/${movie.id}`">
-                {{ movie.title }}
-              </NuxtLink>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <Pagination
-        :items-per-page="data.itemsPerPage"
-        :total="data.total"
-        :page="data.page"
-      />
-    </template>
+    <div v-if="error">{{ error }}</div>
+    <v-data-table-server
+      v-else-if="data"
+      :loading="pending"
+      :headers="headers"
+      :items="data.items"
+      :items-length="data.total"
+      v-model:itemsPerPage="queryOptions.itemsPerPage"
+      v-model:page="queryOptions.page"
+    >
+      <template v-slot:item.title="{ item }">
+        <NuxtLink :to="`/movies/${item.id}`">{{ item.title }}</NuxtLink>
+      </template>
+    </v-data-table-server>
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute();
 const query = computed(() => route.query); // computed needed to trigger refetch
-const { data, error } = await useFetch("/api/movies", { query });
+const { data, error, pending } = await useFetch("/api/movies", {
+  query,
+  key: JSON.stringify(query.value), // This solves <no response> Request aborted as another request to the same endpoint was initiated.
+});
+
+const headers = [
+  { title: "ID", key: "id" },
+  { title: "Title", key: "title" },
+];
+
+const queryOptions = ref({
+  page: data.value?.page,
+  itemsPerPage: data.value?.itemsPerPage,
+  search: data.value?.search,
+});
+
+watch(
+  queryOptions,
+  (newVal) => {
+    const { page, itemsPerPage, search } = newVal;
+    const query: any = {
+      page: page?.toString(),
+      itemsPerPage: itemsPerPage?.toString(),
+      search: search || undefined,
+    };
+
+    navigateTo({ query });
+  },
+  { deep: true }
+);
 </script>

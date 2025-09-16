@@ -1,4 +1,9 @@
 <template>
+  <v-card>
+    <v-toolbar>
+      <v-btn icon="mdi-arrow-left" to="/movies" />
+    </v-toolbar>
+  </v-card>
   <div>
     <h1>Movie details</h1>
     <p>
@@ -8,7 +13,7 @@
     <template v-if="movie">
       <p>Title: {{ movie.title }}</p>
       <p>
-        <button @click="deleteMovie">Delete</button>
+        <v-btn @click="deleteMovie" icon="mdi-delete" />
       </p>
     </template>
   </div>

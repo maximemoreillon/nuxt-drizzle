@@ -31,7 +31,10 @@ export default defineEventHandler(async (event) => {
     .limit(itemsPerPage)
     .offset(offset);
 
-  const [{ total }] = await db.select({ total: count() }).from(Movies);
+  const [{ total }] = await db
+    .select({ total: count() })
+    .from(Movies)
+    .where(where);
 
   return { items, total, itemsPerPage, page, search, sort, order };
 });

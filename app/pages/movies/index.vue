@@ -4,7 +4,10 @@
 
     <v-row>
       <v-col>
-        <search v-model="queryOptions.search" />
+        <search
+          :model-value="queryOptions.search"
+          @update:modelValue="handleSearch"
+        />
       </v-col>
       <v-spacer />
       <v-col cols="auto">
@@ -47,6 +50,11 @@ const queryOptions = ref({
   itemsPerPage: data.value?.itemsPerPage,
   search: data.value?.search,
 });
+
+function handleSearch(s: string) {
+  queryOptions.value.search = s;
+  queryOptions.value.page = 1;
+}
 
 watch(
   queryOptions,

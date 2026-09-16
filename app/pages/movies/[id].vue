@@ -1,21 +1,26 @@
 <template>
-  <v-card class="mx-auto" max-width="40rem">
-    <v-toolbar>
-      <v-btn icon="mdi-arrow-left" to="/movies" />
-      <v-toolbar-title> Movie details </v-toolbar-title>
-      <v-spacer />
-      <v-btn @click="deleteMovie" icon="mdi-delete" />
-    </v-toolbar>
-    <v-card-text v-if="error">
-      {{ error }}
-    </v-card-text>
-    <v-card-text v-if="movie">
-      <v-row justify="space-between">
-        <v-col cols="auto"> Title: {{ movie.title }} </v-col>
-        <v-col cols="auto"> ID: {{ movie.id }} </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <v-btn
+    prepend-icon="mdi-arrow-left"
+    text="Return"
+    to="/movies"
+    variant="flat"
+  />
+  <h2 class="my-2">Movie details</h2>
+  <v-alert v-if="error">
+    {{ error }}
+  </v-alert>
+  <template v-else-if="movie">
+    <p>Title: {{ movie.title }}</p>
+    <p>ID: {{ movie.id }}</p>
+    <v-btn
+      @click="deleteMovie"
+      prepend-icon="mdi-delete"
+      text="delete"
+      variant="outlined"
+      color="red"
+      class="my-2"
+    />
+  </template>
 </template>
 
 <script setup lang="ts">

@@ -3,7 +3,7 @@
 
   <v-row>
     <v-col>
-      <search :model-value="searchQuery" @update:modelValue="handleSearch" />
+      <search v-model="searchQuery" @update:modelValue="page = 1" />
     </v-col>
     <v-spacer />
     <v-col cols="auto">
@@ -49,9 +49,4 @@ const headers = [
   { title: "ID", key: "id" },
   { title: "Title", key: "title" },
 ];
-
-function handleSearch(s: string) {
-  searchQuery.value = s;
-  page.value = 1; // Reset page
-}
 </script>

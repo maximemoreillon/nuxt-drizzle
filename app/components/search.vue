@@ -16,10 +16,14 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({ modelValue: { type: String } });
-const emit = defineEmits(["update:modelValue"]);
-const search = ref(props.modelValue);
+const model = defineModel<string>();
+
+// Local draft so typing doesn't push to the model until submit;
+// stays in sync if the model changes externally (e.g. browser back/forward).
+const search = ref(model.value);
+watch(model, (v) => (search.value = v));
+
 function submit() {
-  emit("update:modelValue", search.value);
+  model.value = search.value;
 }
 </script>

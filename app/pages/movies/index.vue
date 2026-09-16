@@ -1,32 +1,32 @@
 <template>
-  <div>
-    <h1>Movies</h1>
+  <h2>Movies</h2>
 
-    <v-row>
-      <v-col>
-        <search :model-value="searchQuery" @update:modelValue="handleSearch" />
-      </v-col>
-      <v-spacer />
-      <v-col cols="auto">
-        <MovieCreateDialog />
-      </v-col>
-    </v-row>
+  <v-row>
+    <v-col>
+      <search :model-value="searchQuery" @update:modelValue="handleSearch" />
+    </v-col>
+    <v-spacer />
+    <v-col cols="auto">
+      <MovieCreateDialog />
+    </v-col>
+  </v-row>
 
-    <div v-if="error">{{ error }}</div>
-    <v-data-table-server
-      v-else-if="data"
-      :loading="pending"
-      :headers="headers"
-      :items="data.items"
-      :items-length="data.total"
-      v-model:itemsPerPage="itemsPerPage"
-      v-model:page="page"
-    >
-      <template v-slot:item.title="{ item }">
-        <NuxtLink :to="`/movies/${item.id}`">{{ item.title }}</NuxtLink>
-      </template>
-    </v-data-table-server>
-  </div>
+  <v-alert v-if="error">
+    {{ error }}
+  </v-alert>
+  <v-data-table-server
+    v-else-if="data"
+    :loading="pending"
+    :headers="headers"
+    :items="data.items"
+    :items-length="data.total"
+    v-model:itemsPerPage="itemsPerPage"
+    v-model:page="page"
+  >
+    <template v-slot:item.title="{ item }">
+      <NuxtLink :to="`/movies/${item.id}`">{{ item.title }}</NuxtLink>
+    </template>
+  </v-data-table-server>
 </template>
 
 <script setup lang="ts">

@@ -1,23 +1,17 @@
 <template>
   <v-form @submit.prevent="submit">
-    <v-row align="center">
-      <v-col>
-        <v-text-field
-          type="text"
-          v-model="search"
-          label="Search"
-          hide-details
-        />
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          type="submit"
-          prepend-icon="mdi-magnify"
-          text="Search"
-          variant="outlined"
-        />
-      </v-col>
-    </v-row>
+    <v-text-field
+      type="text"
+      v-model="search"
+      label="Search"
+      hide-details
+      append-inner-icon="mdi-magnify"
+      @click:append-inner="submit"
+      density="compact"
+      variant="outlined"
+    />
+    <!-- Hidden button to enable form submission when pressing enter -->
+    <button type="submit" hidden />
   </v-form>
 </template>
 

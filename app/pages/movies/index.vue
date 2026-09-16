@@ -4,10 +4,7 @@
 
     <v-row>
       <v-col>
-        <search
-          :model-value="queryOptions.search"
-          @update:modelValue="handleSearch"
-        />
+        <search :model-value="searchQuery" @update:modelValue="handleSearch" />
       </v-col>
       <v-spacer />
       <v-col cols="auto">
@@ -22,8 +19,8 @@
       :headers="headers"
       :items="data.items"
       :items-length="data.total"
-      v-model:itemsPerPage="queryOptions.itemsPerPage"
-      v-model:page="queryOptions.page"
+      v-model:itemsPerPage="itemsPerPage"
+      v-model:page="page"
     >
       <template v-slot:item.title="{ item }">
         <NuxtLink :to="`/movies/${item.id}`">{{ item.title }}</NuxtLink>
@@ -33,10 +30,18 @@
 </template>
 
 <script setup lang="ts">
+import { useRouteQuery } from "@vueuse/router";
+
 const route = useRoute();
+
+// Using VueUse's useRouteQuery for synchronization with URL
+const page = useRouteQuery("page", 1, { transform: Number });
+const itemsPerPage = useRouteQuery("itemsPerPage", 3, { transform: Number });
+const searchQuery = useRouteQuery<string>("search", "");
+
 const query = computed(() => route.query); // computed needed to trigger refetch
 const { data, error, pending } = await useFetch("/api/movies", {
-  query,
+  query, // Query is reactive so if it changes, useFetch will run again
   key: JSON.stringify(query.value), // This solves <no response> Request aborted as another request to the same endpoint was initiated.
 });
 
@@ -45,29 +50,8 @@ const headers = [
   { title: "Title", key: "title" },
 ];
 
-const queryOptions = ref({
-  page: data.value?.page,
-  itemsPerPage: data.value?.itemsPerPage,
-  search: data.value?.search,
-});
-
 function handleSearch(s: string) {
-  queryOptions.value.search = s;
-  queryOptions.value.page = 1;
+  searchQuery.value = s;
+  page.value = 1; // Reset page
 }
-
-watch(
-  queryOptions,
-  (newVal) => {
-    const { page, itemsPerPage, search } = newVal;
-    const query: any = {
-      page: page?.toString(),
-      itemsPerPage: itemsPerPage?.toString(),
-      search: search || undefined,
-    };
-
-    navigateTo({ query });
-  },
-  { deep: true }
-);
 </script>
